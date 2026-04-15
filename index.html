@@ -2,8 +2,87 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Markdown Live Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4a6cf7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+
+<!-- ── Primary SEO ── -->
+<title>Markdown Live Preview — Free Online Markdown Editor with PDF Export</title>
+<meta name="description" content="Free online Markdown editor with instant live preview, GitHub-flavored syntax, dark mode, synchronized scroll, code highlighting, and one-click PDF export. No sign-up. Runs entirely in your browser.">
+<meta name="keywords" content="markdown editor, markdown live preview, online markdown editor, markdown to pdf, github flavored markdown, gfm editor, free markdown editor, dark mode markdown, syntax highlighting, browser markdown editor, ace editor markdown, marked.js">
+<meta name="author" content="Maddy-O">
+<meta name="application-name" content="Markdown Live Preview">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="googlebot" content="index, follow">
+<link rel="canonical" href="https://maddy-o.github.io/markdown-live-preview/">
+
+<!-- ── Open Graph (Facebook, LinkedIn, Discord) ── -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://maddy-o.github.io/markdown-live-preview/">
+<meta property="og:title" content="Markdown Live Preview — Free Online Markdown Editor">
+<meta property="og:description" content="Write Markdown on the left, see the rendered preview on the right. Live updates, dark mode, sync scroll, and PDF export. 100% free, runs in your browser.">
+<meta property="og:image" content="https://maddy-o.github.io/markdown-live-preview/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Split-pane Markdown editor with live rendered preview on the right">
+<meta property="og:site_name" content="Markdown Live Preview">
+<meta property="og:locale" content="en_US">
+
+<!-- ── Twitter Card ── -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://maddy-o.github.io/markdown-live-preview/">
+<meta name="twitter:title" content="Markdown Live Preview — Free Online Markdown Editor">
+<meta name="twitter:description" content="Live Markdown editor with dark mode, sync scroll, syntax highlighting, and PDF export. Free, no sign-up, browser-based.">
+<meta name="twitter:image" content="https://maddy-o.github.io/markdown-live-preview/og-image.png">
+<meta name="twitter:image:alt" content="Markdown Live Preview interface screenshot">
+
+<!-- ── Favicon (inline SVG, no extra request) ── -->
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%234a6cf7"/><text x="50" y="72" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="64" fill="white">M</text></svg>'>
+<link rel="apple-touch-icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%234a6cf7"/><text x="50" y="72" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="64" fill="white">M</text></svg>'>
+
+<!-- ── Performance: preconnect to CDN origins ── -->
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
+<!-- ── Structured Data (Schema.org JSON-LD) ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Markdown Live Preview",
+  "url": "https://maddy-o.github.io/markdown-live-preview/",
+  "description": "Free online Markdown editor with live preview, dark mode, synchronized scroll, syntax highlighting, and PDF export.",
+  "applicationCategory": "DeveloperApplication",
+  "applicationSubCategory": "Text Editor",
+  "operatingSystem": "Any (browser-based)",
+  "browserRequirements": "Requires JavaScript. Works in modern browsers (Chrome, Firefox, Safari, Edge).",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Live Markdown preview as you type",
+    "GitHub Flavored Markdown (GFM) support",
+    "Syntax highlighting via highlight.js",
+    "Dark mode with persistent preference",
+    "Synchronized editor and preview scrolling",
+    "One-click PDF export",
+    "Auto-save to browser local storage",
+    "Resizable split panes",
+    "Copy raw Markdown to clipboard"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Maddy-O",
+    "url": "https://github.com/Maddy-O"
+  },
+  "license": "https://opensource.org/licenses/MIT"
+}
+</script>
 
 <!-- Ace Editor -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.7/ace.min.js"></script>
@@ -397,64 +476,112 @@
     .toolbar-btn span { display: none; }
     #preview { padding: 20px 16px; }
   }
+
+  /* ── Visually-hidden h1 for SEO/a11y (logo carries the visual brand) ── */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ── No-JS fallback ── */
+  .noscript-fallback {
+    padding: 32px;
+    max-width: 760px;
+    margin: 40px auto;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    line-height: 1.6;
+  }
+  .noscript-fallback h2 { margin-bottom: 12px; }
 </style>
 </head>
 <body>
 
+<h1 class="sr-only">Markdown Live Preview — Free Online Markdown Editor with Live Preview, Dark Mode, and PDF Export</h1>
+
 <!-- Toolbar -->
-<div class="toolbar">
-  <div class="toolbar-logo"><span>M</span>arkdown Live Preview</div>
-  <div class="toolbar-actions">
-    <button class="toolbar-btn" id="btn-reset" title="Reset to default">
-      <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 22v-6h6"/></svg>
+<header class="toolbar" role="banner">
+  <div class="toolbar-logo" aria-hidden="true"><span>M</span>arkdown Live Preview</div>
+  <nav class="toolbar-actions" aria-label="Editor actions">
+    <button class="toolbar-btn" id="btn-reset" type="button" aria-label="Reset editor to default content" title="Reset to default">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 22v-6h6"/></svg>
       <span>Reset</span>
     </button>
-    <button class="toolbar-btn" id="btn-copy" title="Copy Markdown">
-      <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+    <button class="toolbar-btn" id="btn-copy" type="button" aria-label="Copy Markdown to clipboard" title="Copy Markdown">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
       <span>Copy</span>
     </button>
-    <button class="toolbar-btn" id="btn-pdf" title="Export as PDF">
-      <svg viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M5 12V5a2 2 0 0 1 2-2h7l5 5v4"/><path d="M5 18h1.5a1.5 1.5 0 0 0 0-3H5v6"/><path d="M17 18h2"/><path d="M20 15h-3v6h3"/><path d="M11 15v6h1a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-1z"/></svg>
+    <button class="toolbar-btn" id="btn-pdf" type="button" aria-label="Export rendered preview as PDF" title="Export as PDF">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M5 12V5a2 2 0 0 1 2-2h7l5 5v4"/><path d="M5 18h1.5a1.5 1.5 0 0 0 0-3H5v6"/><path d="M17 18h2"/><path d="M20 15h-3v6h3"/><path d="M11 15v6h1a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-1z"/></svg>
       <span>Export PDF</span>
     </button>
 
-    <div class="toolbar-sep"></div>
+    <div class="toolbar-sep" aria-hidden="true"></div>
 
     <label class="toggle-group">
       Sync scroll
-      <label class="toggle-switch">
-        <input type="checkbox" id="toggle-sync" checked>
-        <span class="toggle-slider"></span>
-      </label>
+      <span class="toggle-switch">
+        <input type="checkbox" id="toggle-sync" checked aria-label="Toggle synchronized scrolling between editor and preview">
+        <span class="toggle-slider" aria-hidden="true"></span>
+      </span>
     </label>
 
     <label class="toggle-group" style="margin-left: 4px;">
       Dark mode
-      <label class="toggle-switch">
-        <input type="checkbox" id="toggle-dark">
-        <span class="toggle-slider"></span>
-      </label>
+      <span class="toggle-switch">
+        <input type="checkbox" id="toggle-dark" aria-label="Toggle dark mode theme">
+        <span class="toggle-slider" aria-hidden="true"></span>
+      </span>
     </label>
-  </div>
-</div>
+  </nav>
+</header>
 
 <!-- Main Editor + Preview -->
-<div class="main">
-  <div class="panel" id="editor-panel">
-    <div class="panel-header">Markdown</div>
+<main class="main" role="main">
+  <section class="panel" id="editor-panel" aria-label="Markdown source editor">
+    <div class="panel-header" id="editor-label">Markdown</div>
     <div id="editor-container">
-      <div id="editor"></div>
+      <div id="editor" role="textbox" aria-multiline="true" aria-labelledby="editor-label"></div>
     </div>
-  </div>
-  <div class="divider" id="divider"></div>
-  <div class="panel" id="preview-panel">
-    <div class="panel-header">Preview</div>
-    <div id="preview"></div>
-  </div>
-</div>
+  </section>
+  <div class="divider" id="divider" role="separator" aria-orientation="vertical" aria-label="Resize panels" tabindex="0"></div>
+  <section class="panel" id="preview-panel" aria-label="Rendered Markdown preview">
+    <div class="panel-header" id="preview-label">Preview</div>
+    <div id="preview" aria-live="polite" aria-labelledby="preview-label"></div>
+  </section>
+</main>
 
 <!-- Toast -->
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<!-- No-JS fallback content (also helps SEO crawlers that don't run JS) -->
+<noscript>
+  <div class="noscript-fallback">
+    <h2>Markdown Live Preview</h2>
+    <p><strong>JavaScript is required</strong> to run this editor. Please enable JavaScript in your browser.</p>
+    <p>Markdown Live Preview is a free, browser-based Markdown editor with live preview, dark mode, synchronized scrolling, syntax highlighting, and one-click PDF export. It supports <strong>GitHub Flavored Markdown (GFM)</strong> including tables, task lists, fenced code blocks, and more.</p>
+    <h3>Features</h3>
+    <ul>
+      <li>Live preview as you type</li>
+      <li>GitHub Flavored Markdown (GFM) support</li>
+      <li>Syntax-highlighted code blocks</li>
+      <li>Dark mode with persistent preference</li>
+      <li>Synchronized editor/preview scrolling</li>
+      <li>Export rendered preview as PDF</li>
+      <li>Auto-save to browser local storage</li>
+      <li>Resizable split panes</li>
+    </ul>
+    <p>Source code: <a href="https://github.com/Maddy-O/markdown-live-preview">github.com/Maddy-O/markdown-live-preview</a></p>
+  </div>
+</noscript>
 
 <script>
 (function() {
@@ -507,7 +634,7 @@ greet("World");
 
 ## Image
 
-![Placeholder](https://via.placeholder.com/600x200/4a6cf7/ffffff?text=Markdown+Live+Preview)
+![Placeholder](https://placehold.co/600x200/4a6cf7/ffffff?text=Markdown+Live+Preview&font=source-sans-pro)
 
 ---
 

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://maddy-o.github.io/markdown-live-preview/sitemap.xml
